@@ -1,6 +1,15 @@
 <template>
   <div id="app">
     <nav>
+      <h1>TODO APP</h1>
+      <label>Search Items:</label>
+      <input
+        id="searchTodos"
+        v-model="searchTodos"
+        type="search"
+        v-on:keyup.enter="filterTodos"
+      />
+      <h4 v-if="searchList">{{ searchTodos.title }} is in your Todo List.</h4>
       <TodoButton @show-form="showForm" />
       <form v-if="formVisible" @submit.prevent="addTodo">
         <div>
@@ -51,6 +60,8 @@ export default {
       category: "",
       priority: "",
       todos: [],
+      searchList: false,
+      searchTodos: [],
     };
   },
   methods: {
@@ -65,6 +76,18 @@ export default {
         priority: this.priority,
       };
       this.todos.push(newTodo);
+    },
+    filterTodos() {
+      let temp = "";
+      for (let i = 0; i < this.todos.length; i++) {
+        if (this.todos[i].title === this.searchTodos.title) {
+          this.searchList = true;
+          temp = this.todos[i].title;
+          return temp;
+        } else {
+          return NaN;
+        }
+      }
     },
   },
 };
