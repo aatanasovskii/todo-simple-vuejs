@@ -84,8 +84,6 @@ export default {
           this.searchList = true;
           temp = this.todos[i].title;
           return temp;
-        } else {
-          return NaN;
         }
       }
     },
