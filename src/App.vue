@@ -3,13 +3,13 @@
     <h1>TODO APP</h1>
     <button @click="searchList = true">Search Todo</button>
     <TodoSearch
-      v-if="searchList"
+      v-show="searchList"
       v-bind:searchList="searchList"
       v-bind:todos="todos"
       @show-todo="showTodo"
     />
     <TodoButton @add-todo="addTodo($event)" @show-list="showList" />
-    <TodoList v-if="!this.searchList" v-bind:todos="todos" />
+    <TodoList v-show="!this.searchList" v-bind:todos="todos" />
   </div>
 </template>
 
