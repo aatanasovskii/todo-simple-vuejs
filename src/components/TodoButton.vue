@@ -1,33 +1,40 @@
 <template>
   <div class="button">
     <button @click="showForm">Add New Todo Item</button>
-    <form v-if="formVisible" @submit.prevent="addTodo">
+    <form v-if="formVisible">
       <div>
         <label>Title: </label>
-        <input type="text" id="title" v-model="this.todos.title" required />
+        <input type="text" id="title" v-model="title" required />
       </div>
       <div>
         <label>Description:</label>
-        <textarea id="description" v-model="this.todos.description" required>
-        </textarea>
+        <textarea id="description" v-model="description" required></textarea>
       </div>
       <div>
-        <label>Category:</label>
-        <select id="category" v-model="this.todos.category" required>
+        <label>Category: </label>
+        <select id="category" v-model="category" required>
           <option value="Work">Work</option>
           <option value="Personal">Personal</option>
           <option value="Chores">Chores</option>
         </select>
       </div>
       <div>
-        <label>Priority:</label>
-        <select id="priority" v-model="this.todos.priority" required>
+        <label>Priority: </label>
+        <select id="priority" v-model="priority" required>
           <option value="Urgent">Urgent</option>
           <option value="Normal">Normal</option>
           <option value="Low">Low</option>
         </select>
       </div>
-      <button type="submit" @click="addTodoItem">Add Todo Item</button>
+      <button
+        type="submit"
+        @click="
+          addTodo();
+          showList();
+        "
+      >
+        Add Todo Item
+      </button>
     </form>
   </div>
 </template>
@@ -36,7 +43,10 @@
 export default {
   data() {
     return {
-      todos: {},
+      title: "",
+      description: "",
+      category: "",
+      priority: "",
       formVisible: false,
     };
   },
@@ -46,15 +56,20 @@ export default {
     },
     addTodo() {
       const newTodo = {
-        title: this.todos.title,
-        description: this.todos.description,
-        category: this.todos.category,
-        priority: this.todos.priority,
+        title: this.title,
+        description: this.description,
+        category: this.category,
+        priority: this.priority,
       };
-      this.todos.push(newTodo);
+      this.$emit("add-todo", newTodo);
+      this.title = "";
+      this.description = "";
+      this.category = "";
+      this.priority = "";
+      this.formVisible = false;
     },
-    addTodoItem() {
-      this.$emit("add-todo-item", this.todos);
+    showList() {
+      this.$emit("show-list");
     },
   },
 };

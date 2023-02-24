@@ -1,8 +1,16 @@
 <template>
   <div>
-    <h3 v-if="this.includeTodo">
-      The item {{ searchTodos }} is in your todo list.
-    </h3>
+    <label>Search Todo: </label>
+    <input id="searchTodos" v-model="searchTodos" type="search" />
+    <input
+      type="submit"
+      value="Submit"
+      @click="
+        todoSearchList();
+        showTodo();
+      "
+    />
+    <h3 v-if="includeTodo">The item {{ searchTodos }} is in your todo list.</h3>
     <TodoList :todos="tempList" />
   </div>
 </template>
@@ -11,28 +19,29 @@
 import TodoList from "@/components/TodoList.vue";
 
 export default {
+  components: { TodoList },
   props: {
-    todos: {
-      type: Object,
-      required: true,
-    },
-    searchTodos: String,
+    todos: Array,
   },
   data() {
     return {
-      tempList: {},
+      tempList: [],
       includeTodo: false,
+      searchTodos: "",
     };
   },
-  components: { TodoList },
   methods: {
-    filterTodos() {
-      for (let i in this.todos) {
-        if (i.toLowerCase().includes(this.searchTodos)) {
-          this.tempList.push(i);
+    todoSearchList() {
+      this.todos.forEach((todo) => {
+        if (todo.title === this.searchTodos) {
+          console.log(todo);
+          this.tempList.push(todo);
           this.includeTodo = true;
         }
-      }
+      });
+    },
+    showTodo() {
+      this.$emit("show-todo");
     },
   },
 };

@@ -1,8 +1,9 @@
 <template>
   <div class="list">
     <ol type="1">
-      <li v-for="todo in todos" :key="todo.title">
-        {{ todo.title }} - {{ todo.category }}, {{ todo.priority }}
+      <li v-for="(todo, index) in todos" :key="index">
+        {{ todo.title }} - {{ todo.category }},
+        {{ todo.priority }}
       </li>
     </ol>
   </div>
@@ -11,7 +12,7 @@
 <script>
 export default {
   props: {
-    todos: Object,
+    todos: Array,
   },
 };
 </script>

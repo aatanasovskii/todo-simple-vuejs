@@ -1,18 +1,15 @@
 <template>
   <div id="app">
-    <nav>
-      <h1>TODO APP</h1>
-      <label>Search Todo: </label>
-      <input id="searchTodos" v-model="searchTodos" type="search" />
-      <input type="submit" value="Submit" @click="todoSearchList" />
-      <TodoSearch
-        v-if="this.searchList"
-        v-bind:todos="todos"
-        v-bind:searchTodos="this.searchTodos"
-      />
-      <TodoButton @add-todo-item="addTodoItem" />
-      <TodoList v-if="!this.searchList" v-bind:todos="todos" />
-    </nav>
+    <h1>TODO APP</h1>
+    <button @click="searchList = true">Search Todo</button>
+    <TodoSearch
+      v-if="searchList"
+      v-bind:searchList="searchList"
+      v-bind:todos="todos"
+      @show-todo="showTodo"
+    />
+    <TodoButton @add-todo="addTodo($event)" @show-list="showList" />
+    <TodoList v-if="!this.searchList" v-bind:todos="todos" />
   </div>
 </template>
 
@@ -29,17 +26,22 @@ export default {
   },
   data() {
     return {
-      todos: {},
+      todos: [],
       searchList: false,
       searchTodos: "",
     };
   },
   methods: {
-    todoSearchList() {
+    addTodo(updatedTodo) {
+      console.log(updatedTodo);
+      console.log(this.todos);
+      this.todos.push(updatedTodo);
+    },
+    showTodo() {
       this.searchList = true;
     },
-    addTodoItem(data) {
-      this.todos.push(data);
+    showList() {
+      this.searchList = false;
     },
   },
 };
