@@ -37,6 +37,9 @@ export default {
           console.log(todo);
           this.tempList.push(todo);
           this.includeTodo = true;
+          return;
+        } else {
+          this.includeTodo = false;
         }
       });
     },
