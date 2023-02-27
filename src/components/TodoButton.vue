@@ -4,15 +4,19 @@
     <form v-if="formVisible">
       <div>
         <label>Title: </label>
-        <input type="text" id="title" v-model="title" required />
+        <input type="text" id="title" v-model="todo.title" required />
       </div>
       <div>
         <label>Description:</label>
-        <textarea id="description" v-model="description" required></textarea>
+        <textarea
+            id="description"
+            v-model="todo.description"
+            required>
+        </textarea>
       </div>
       <div>
         <label>Category: </label>
-        <select id="category" v-model="category" required>
+        <select id="category" v-model="todo.category" required>
           <option value="Work">Work</option>
           <option value="Personal">Personal</option>
           <option value="Chores">Chores</option>
@@ -20,7 +24,7 @@
       </div>
       <div>
         <label>Priority: </label>
-        <select id="priority" v-model="priority" required>
+        <select id="priority" v-model="todo.priority" required>
           <option value="Urgent">Urgent</option>
           <option value="Normal">Normal</option>
           <option value="Low">Low</option>
@@ -43,10 +47,7 @@
 export default {
   data() {
     return {
-      title: "",
-      description: "",
-      category: "",
-      priority: "",
+      todo: {},
       formVisible: false,
     };
   },
@@ -55,17 +56,8 @@ export default {
       this.formVisible = true;
     },
     addTodo() {
-      const newTodo = {
-        title: this.title,
-        description: this.description,
-        category: this.category,
-        priority: this.priority,
-      };
-      this.$emit("add-todo", newTodo);
-      this.title = "";
-      this.description = "";
-      this.category = "";
-      this.priority = "";
+      this.$emit("add-todo", this.todo);
+      this.todo ={};
       this.formVisible = false;
     },
     showList() {
