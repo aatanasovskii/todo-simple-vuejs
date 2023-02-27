@@ -8,10 +8,7 @@
       </div>
       <div>
         <label>Description:</label>
-        <textarea
-            id="description"
-            v-model="todo.description"
-            required>
+        <textarea id="description" v-model="todo.description" required>
         </textarea>
       </div>
       <div>
@@ -57,7 +54,7 @@ export default {
     },
     addTodo() {
       this.$emit("add-todo", this.todo);
-      this.todo ={};
+      this.todo = {};
       this.formVisible = false;
     },
     showList() {

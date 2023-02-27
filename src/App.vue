@@ -4,7 +4,7 @@
     <TodoButton @add-todo="addTodo($event)" @show-list="showList" />
     <label>Search Todo: </label>
     <input id="searchTodos" v-model="searchTodos" type="search" />
-    <input type="submit" value="Submit" @click="todoSearchList" />
+    <!--    <input type="submit" value="Submit" @click.prevent="todoSearchList" />-->
     <TodoList :todos="todosFinal" />
     <button @click="showList">Show the whole list</button>
   </div>
@@ -22,39 +22,33 @@ export default {
   data() {
     return {
       todos: [],
-      todosSearch: [],
       searchList: false,
       searchTodos: "",
-      includeTodo: false,
     };
   },
   methods: {
     addTodo(updatedTodo) {
-      console.log(updatedTodo);
-      console.log(this.todos);
       this.todos.push(updatedTodo);
     },
     showList() {
       this.searchList = false;
+      this.searchTodos = "";
     },
-    todoSearchList() {
-      this.searchList = true;
-      this.todosSearch = [];
-      this.todos.forEach((todo) => {
-        if (todo.title === this.searchTodos) {
-          console.log(todo);
-          this.todosSearch.push(todo);
-          this.includeTodo = true;
-          this.searchTodos = "";
-        } else {
-          this.includeTodo = false;
-        }
-      });
-    },
+    // todoSearchList() {
+    //   this.searchList = true;
+    // this.todosSearch = this.todos.filter(
+    //   (todo) => todo.title === this.searchTodos
+    // );
+    // if (this.todosSearch.length != 0) {
+    //   this.searchTodos = "";
+    // }
+    // },
   },
   computed: {
     todosFinal() {
-      return this.searchList ? this.todosSearch : this.todos;
+      return this.searchTodos.length === 0
+        ? this.todos
+        : this.todos.filter((todo) => todo.title === this.searchTodos);
     },
   },
 };
