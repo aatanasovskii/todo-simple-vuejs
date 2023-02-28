@@ -1,7 +1,6 @@
 <template>
   <div class="button">
-    <button @click="showForm">Add New Todo Item</button>
-    <form v-if="formVisible">
+    <form>
       <div>
         <label>Title: </label>
         <input type="text" id="title" v-model="todo.title" required />
@@ -32,6 +31,7 @@
         @click="
           addTodo();
           showList();
+          visibleForm();
         "
       >
         Add Todo Item
@@ -45,13 +45,9 @@ export default {
   data() {
     return {
       todo: {},
-      formVisible: false,
     };
   },
   methods: {
-    showForm() {
-      this.formVisible = true;
-    },
     addTodo() {
       this.$emit("add-todo", this.todo);
       this.todo = {};
@@ -59,6 +55,9 @@ export default {
     },
     showList() {
       this.$emit("show-list");
+    },
+    visibleForm() {
+      this.$emit("form-visible");
     },
   },
 };

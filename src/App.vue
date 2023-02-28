@@ -1,11 +1,22 @@
 <template>
   <div id="app">
     <h1>TODO APP</h1>
-    <TodoButton @add-todo="addTodo($event)" @show-list="showList" />
+    <button @click="showForm">Add New Todo Item</button>
+    <TodoButton
+      v-if="formVisible"
+      @add-todo="addTodo($event)"
+      @show-list="showList"
+      @form-visible="visibleForm"
+    />
     <label>Search Todo: </label>
     <input id="searchTodos" v-model="searchTodos" type="search" />
-    <!--    <input type="submit" value="Submit" @click.prevent="todoSearchList" />-->
-    <TodoList :todos="todosFinal" />
+    <TodoList @edit-todo="editTodo" :todos="todosFinal" />
+    <TodoEdit
+      v-if="editTodoClicked"
+      :todo="editTodos"
+      @save-todo="saveEditedTodo($event)"
+      @cancel="cancelEditing"
+    />
     <button @click="showList">Show the whole list</button>
   </div>
 </template>
@@ -13,42 +24,66 @@
 <script>
 import TodoList from "@/components/TodoList.vue";
 import TodoButton from "@/components/TodoButton.vue";
+import TodoEdit from "@/components/TodoEdit.vue";
 
 export default {
   components: {
+    TodoEdit,
     TodoButton,
     TodoList,
   },
   data() {
     return {
-      todos: [],
       searchList: false,
       searchTodos: "",
+      formVisible: false,
+      editTodoClicked: false,
+      editIndex: 0,
+      editTodos: {},
     };
   },
   methods: {
     addTodo(updatedTodo) {
-      this.todos.push(updatedTodo);
+      this.$store.state.todos.push(updatedTodo);
+    },
+    showForm() {
+      this.formVisible = true;
+    },
+    visibleForm() {
+      this.formVisible = false;
     },
     showList() {
       this.searchList = false;
       this.searchTodos = "";
     },
-    // todoSearchList() {
-    //   this.searchList = true;
-    // this.todosSearch = this.todos.filter(
-    //   (todo) => todo.title === this.searchTodos
-    // );
-    // if (this.todosSearch.length != 0) {
-    //   this.searchTodos = "";
-    // }
-    // },
+    editTodo(indexTodo) {
+      this.editIndex = indexTodo;
+      this.editTodoClicked = true;
+      this.editTodos = this.todos[indexTodo];
+      console.log(this.editTodos);
+    },
+    saveEditedTodo(editedTodo) {
+      this.$store.state.todos = this.$store.state.todos.map((todo, index) =>
+        index === this.editIndex ? editedTodo : todo
+      );
+      console.log(this.$store.state.todos);
+      this.editIndex = 0;
+      this.editTodos = [];
+      this.editTodoClicked = false;
+    },
+    cancelEditing() {
+      this.editIndex = 0;
+      this.editTodos = [];
+      this.editTodoClicked = false;
+    },
   },
   computed: {
     todosFinal() {
       return this.searchTodos.length === 0
-        ? this.todos
-        : this.todos.filter((todo) => todo.title === this.searchTodos);
+        ? this.$store.state.todos
+        : this.$store.state.todos.filter(
+            (todo) => todo.title === this.searchTodos
+          );
     },
   },
 };
