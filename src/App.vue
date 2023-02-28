@@ -25,7 +25,6 @@
 import TodoList from "@/components/TodoList.vue";
 import TodoButton from "@/components/TodoButton.vue";
 import TodoEdit from "@/components/TodoEdit.vue";
-
 export default {
   components: {
     TodoEdit,
@@ -44,7 +43,7 @@ export default {
   },
   methods: {
     addTodo(updatedTodo) {
-      this.$store.state.todos.push(updatedTodo);
+      this.$store.commit("ADD_TODO", updatedTodo);
     },
     showForm() {
       this.formVisible = true;
@@ -78,6 +77,9 @@ export default {
     },
   },
   computed: {
+    todos() {
+      return this.$store.state.todos;
+    },
     todosFinal() {
       return this.searchTodos.length === 0
         ? this.$store.state.todos
