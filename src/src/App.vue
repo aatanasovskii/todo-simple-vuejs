@@ -10,7 +10,6 @@
     />
     <label>Search Todo: </label>
     <input id="searchTodos" v-model="searchTodos" type="search" />
-    <!--    <input type="submit" value="Submit" @click.prevent="todoSearchList" />-->
     <TodoList @edit-todo="editTodo" :todos="todosFinal" />
     <TodoEdit
       v-if="editTodoClicked"
@@ -41,7 +40,7 @@ export default {
       formVisible: false,
       editTodoClicked: false,
       editIndex: 0,
-      editTodos: [],
+      editTodos: {},
     };
   },
   methods: {
@@ -61,9 +60,11 @@ export default {
     editTodo(indexTodo) {
       this.editIndex = indexTodo;
       this.editTodoClicked = true;
-      this.editTodos = this.todos.filter((todo, index) => index === indexTodo);
+      this.editTodos = this.todos[indexTodo];
+      console.log(this.editTodos);
     },
     saveEditedTodo(editedTodo) {
+      console.log(editedTodo);
       this.todos[this.editIndex] = editedTodo;
       console.log(this.todos);
       this.editIndex = 0;

@@ -11,7 +11,7 @@
         />
       </div>
       <div>
-        <label>Description:</label>
+        <label>Description: </label>
         <textarea
           id="edit-description"
           v-model="editedTodo.description"
@@ -45,18 +45,17 @@
 export default {
   props: {
     todo: {
-      type: Array,
+      type: Object,
       required: true,
     },
   },
   data() {
     return {
-      editedTodo: this.todo,
+      editedTodo: { ...this.todo },
     };
   },
   methods: {
     saveTodo() {
-      console.log(this.editedTodo);
       this.$emit("save-todo", this.editedTodo);
     },
   },
