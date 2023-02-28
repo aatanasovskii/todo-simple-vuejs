@@ -62,10 +62,12 @@ export default {
       console.log(this.editTodos);
     },
     saveEditedTodo(editedTodo) {
-      this.$store.state.todos = this.$store.state.todos.map((todo, index) =>
-        index === this.editIndex ? editedTodo : todo
-      );
-      console.log(this.$store.state.todos);
+      let save_todo = { todo: editedTodo, index: this.editIndex };
+      this.$store.commit("SAVE_TODO", save_todo);
+      // this.$store.state.todos = this.$store.state.todos.map((todo, index) =>
+      //   index === this.editIndex ? editedTodo : todo
+      // );
+      // console.log(this.$store.state.todos);
       this.editIndex = 0;
       this.editTodos = [];
       this.editTodoClicked = false;

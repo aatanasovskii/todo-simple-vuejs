@@ -16,9 +16,9 @@ export default new Vuex.Store({
     ADD_TODO(state, updatedTodo) {
       state.todos.push(updatedTodo);
     },
-    SAVE_EDIT_TODO(state, editedTodo, editIndex) {
+    SAVE_TODO(state, save_todo) {
       state.todos = state.todos.map((todo, index) =>
-        index === editIndex ? editedTodo : todo
+        index === save_todo.index ? save_todo.todo : todo
       );
     },
   },
