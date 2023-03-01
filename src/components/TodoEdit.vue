@@ -1,6 +1,7 @@
 <template>
   <div class="button">
-    <form @submit.prevent="saveTodo">
+    <h3>Edit your Todo</h3>
+    <form @submit.prevent="saveEditedTodo">
       <div>
         <label>Title: </label>
         <input
@@ -35,8 +36,12 @@
           <option value="Low">Low</option>
         </select>
       </div>
-      <button type="submit" @click="saveTodo">Save</button>
-      <button type="button" @click="$emit('cancel')">Cancel</button>
+      <router-link to="/" tag="button" @click="saveEditedTodo">
+        Save
+      </router-link>
+      <router-link to="/" tag="button" @click="cancelEditing">
+        Cancel
+      </router-link>
     </form>
   </div>
 </template>
@@ -44,20 +49,26 @@
 <script>
 export default {
   props: {
-    todo: {
-      type: Object,
+    index: {
+      type: Number,
       required: true,
     },
   },
   data() {
     return {
-      editedTodo: { ...this.todo },
+      editedTodo: this.$store.state.todos[this.index],
     };
   },
   methods: {
-    saveTodo() {
-      this.$emit("save-todo", this.editedTodo);
+    saveEditedTodo() {
+      let save_todo = { todo: this.editedTodo, index: this.index };
+      this.$store.commit("SAVE_TODO", save_todo);
+    },
+    cancelEditing() {
+      this.$store.commit("CANCEL_TODO");
     },
   },
 };
 </script>
+
+<style scoped></style>

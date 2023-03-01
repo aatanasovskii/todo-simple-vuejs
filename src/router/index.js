@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import TodoButton from "../components/TodoButton.vue";
-// import TodoList from "../components/TodoList.vue";
+import TodoEdit from "../components/TodoEdit.vue";
+import HomeView from "../components/HomeView.vue";
 
 Vue.use(VueRouter);
 
@@ -9,21 +9,19 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: TodoButton,
+    component: HomeView,
   },
   {
-    path: "/list",
-    name: "list",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "list" */ "../components/TodoList.vue"),
+    path: "/edit/:index",
+    name: "edit",
+    component: TodoEdit,
+    props: true,
   },
 ];
 
 const router = new VueRouter({
   routes,
+  mode: "history",
 });
 
 export default router;

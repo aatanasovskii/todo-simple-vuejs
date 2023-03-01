@@ -4,7 +4,7 @@
       <li v-for="(todo, index) in todos" :key="index">
         {{ todo.title }} - {{ todo.category }},
         {{ todo.priority }}
-        <button @click="editTodo(index)">Edit</button>
+        <router-link :to="{name: 'edit', params: { index: index }}" tag="button">Edit</router-link>
       </li>
     </ol>
   </div>
@@ -19,11 +19,7 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    editTodo(index) {
-      this.$emit("edit-todo", index);
-    },
-  },
+  methods: {},
 };
 </script>
 
