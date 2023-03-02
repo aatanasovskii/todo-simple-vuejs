@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <p v-if="numberTodos !== 0">Your Todo List:</p>
+    <h3 class="your-list" v-if="numberTodos !== 0">Your Todo List:</h3>
     <ol type="1">
       <li v-for="(todo, index) in todos" :key="index">
         {{ todo.title }} - {{ todo.category }},
@@ -15,7 +15,7 @@
       </li>
     </ol>
     <div v-if="this.$store.state.numberDoneTodos !== 0">
-      <p>Completed Todos:</p>
+      <h3>Completed Todos:</h3>
       <ol type="1">
         <li v-for="(todo, index) in doneTodos" :key="index">
           <s>{{ todo.title }} - {{ todo.category }}, {{ todo.priority }}</s>
@@ -48,4 +48,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.your-list{
+  margin-top: 40px;
+  font-size: 25px;
+  font-weight: bold;
+}
+</style>

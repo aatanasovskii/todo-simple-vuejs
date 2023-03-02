@@ -35,6 +35,7 @@ export default new Vuex.Store({
     },
     DONE_TODO(state, indexDone) {
       state.numberDoneTodos++;
+      state.numberTodos--;
       state.doneTodos.push(
         state.todos.find((todo, index) => index === indexDone)
       );
