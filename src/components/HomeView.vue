@@ -8,6 +8,7 @@
       @show-list="showList"
       @form-visible="visibleForm"
     />
+    <br />
     <label>Search Todo: </label>
     <input id="searchTodos" v-model="searchTodos" type="search" />
     <TodoList @edit-todo="editTodo" :todos="todosFinal" />
@@ -18,10 +19,8 @@
 <script>
 import TodoList from "./TodoList.vue";
 import TodoButton from "./TodoButton.vue";
-import TodoEdit from "./TodoEdit.vue";
 export default {
   components: {
-    TodoEdit,
     TodoButton,
     TodoList,
   },
@@ -48,6 +47,7 @@ export default {
     showList() {
       this.searchList = false;
       this.searchTodos = "";
+      this.formVisible = false;
     },
     editTodo(indexTodo) {
       this.editIndex = indexTodo;

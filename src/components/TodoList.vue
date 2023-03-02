@@ -14,12 +14,7 @@
 export default {
   props: {
     todos: Array,
-    selectedTodo: Object,
   },
-  data() {
-    return {};
-  },
-  methods: {},
 };
 </script>
 

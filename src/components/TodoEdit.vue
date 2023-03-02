@@ -59,6 +59,11 @@ export default {
       editedTodo: this.$store.state.todos[this.index],
     };
   },
+  // computed: {
+  //   editedTodo() {
+  //     return this.$store.state.todos[this.index];
+  //   },
+  // },
   methods: {
     saveEditedTodo() {
       let save_todo = { todo: this.editedTodo, index: this.index };
