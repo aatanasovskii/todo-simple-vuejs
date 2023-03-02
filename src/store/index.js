@@ -6,13 +6,17 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     todos: [],
+    numberTodos: 0,
     editTodoClicked: false,
     indexEdit: 0,
+    doneTodos: [],
+    numberDoneTodos: 0,
   },
   getters: {},
   mutations: {
     ADD_TODO(state, updatedTodo) {
       state.todos.push(updatedTodo);
+      state.numberTodos++;
     },
     SAVE_TODO(state, save_todo) {
       state.todos = state.todos.map((todo, index) =>
@@ -28,6 +32,13 @@ export default new Vuex.Store({
     EDIT_TODO_CLICKED(state, index) {
       state.editTodoClicked = true;
       state.indexEdit = index;
+    },
+    DONE_TODO(state, indexDone) {
+      state.numberDoneTodos++;
+      state.doneTodos.push(
+        state.todos.find((todo, index) => index === indexDone)
+      );
+      state.todos.splice(indexDone, 1);
     },
   },
   actions: {},

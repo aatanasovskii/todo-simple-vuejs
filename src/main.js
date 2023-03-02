@@ -5,6 +5,9 @@ import store from "./store";
 
 Vue.config.productionTip = false;
 
+import Vuelidate from "vuelidate";
+Vue.use(Vuelidate);
+
 new Vue({
   router,
   store,
